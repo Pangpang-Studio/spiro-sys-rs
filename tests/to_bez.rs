@@ -93,7 +93,7 @@ struct TestBezCtx {
 }
 
 impl TestBezCtx {
-    const PRECISION: usize = 12;
+    const PRECISION: usize = 11;
 }
 
 impl BezCtx for TestBezCtx {
