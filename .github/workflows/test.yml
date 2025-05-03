@@ -1,0 +1,39 @@
+name: Test
+
+on:
+  merge_group:
+  pull_request:
+  push:
+    branches:
+      - master
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+          - os: macos-latest
+          - os: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Test native build
+        run: cargo build --verbose --locked
+
+      - name: Run simple tests
+        run: cargo test --verbose
+
+      # - name: Run heavy tests
+      #   run: cargo test --verbose -- --ignored
